@@ -1,4 +1,4 @@
-const mongoose=require('mongoose');
+import mongoose from 'mongoose';
 
 const hashtagSchema=new mongoose.Schema({
 
@@ -16,4 +16,4 @@ tweets:[
 },{timestamps:true});
 
 const Hashtag=mongoose.model('Hashtag',hashtagSchema);
-module.exports=Hashtag;
+export default Hashtag;
