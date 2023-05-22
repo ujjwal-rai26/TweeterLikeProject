@@ -8,7 +8,10 @@ class TweetService{
 
     async create(data){
         const content=data.content;
-        const tags=content.match(/#[a-zA-Z0-9_]+/g).map((tag)=>tag.substring(1));
+        const tags=content.match(/#[a-zA-Z0-9_]+/g)
+        .map((tag)=>tag.substring(1))
+        .map(tag=>tag.toLowerCase());  //this regex extract hashtag
+
         const tweet=await this.tweetRepository.create(data);
         let alreadyPresentTags=await this.hashtagRepository.findByName(tags); //this will give full object of tweet which include tweet id ,content etc
         let titleOfPresentTags=alreadyPresentTags.map(tags =>tags.title); //we only want tweet title so we did this,return only titles
