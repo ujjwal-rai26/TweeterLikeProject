@@ -20,8 +20,13 @@ const commentSchema=new  mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,  //iska type id h
         required:true,
         refPath:'onModel'  // yeh id apn onModel se lenge (refPath ka use aise hota h)
-    }
-    
+    },
+    comments:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Comment'
+        }
+    ] 
 
 },{timestamps:true})
 const Comment=mongoose.model('Comment',commentSchema);

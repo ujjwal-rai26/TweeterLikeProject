@@ -10,7 +10,8 @@ class LikeService{
       async toggleLike(modelId,modelType,userId){  
 
            if(modelType=='Tweet'){
-            var likeable=await this.tweetRepository.find(modelId);
+            var likeable=await this.tweetRepository.find(modelId); //if its tweet ,we will get tweet in likeable  
+            console.log(likeable);
            }
            else if(modelType=='Comment'){
             //todo
@@ -19,28 +20,35 @@ class LikeService{
             throw new Error('unknow model type');
            }
          
-           const exists=await this.likeRepository.findByUserAndLikeable({
-            user:userId,
+           const exists=await  this.likeRepository.findByUserAndLikeable({  //here we will check that given tweet or comment is already liked or not
+            user:userId,                          //this function also return you the like
             onModel:modelType,
             likeable:modelId
            });
 
-           if(exists){
-
-            likeable.likes.pull(exists.id);
+           if(exists){                  //it means its already like   
+            likeable.likes.pull(exists.id);    //we will remove the like from the tweet or comment 
             await likeable.save();
-            await exists.remove();
-            var isAdded =false;    
+  
+          //  await exists.remove();     //then we will remove the like also from the Like  //check why this remove is not working
+
+            await  this.likeRepository.destroy(exists.id);  //then we will destroy the like 
+
+           console.log("exist is",exists);
+           var isAdded =false;   
            }
            else{
 
-              const newLike=await this.likeRepository.create({
+              const newLike=await this.likeRepository.create({  //it means it do not exist so we create a like
                 user:userId,
                 onModel:modelType,
-               likeable:modelId
+                likeable:modelId
               });
-              likeable.likes.push(newLike);
-              await likeable.save();
+
+                console.log(newLike);
+
+              likeable.likes.push(newLike);   //we will add this like in likeable (either tweet or comment)
+              await likeable.save();              
               var isAdded =true;    
            }
               
