@@ -1,6 +1,6 @@
 import passport from "passport";
 
-export const authenticate=(req,res,next)=>{
+export const authenticate=(req,res,next)=>{   //this will check wheather user is authenticated or not
    
     passport.authenticate('jwt',(err,user)=>{
         if(err) next(err);
@@ -11,7 +11,7 @@ export const authenticate=(req,res,next)=>{
             })
         }
 
-        req.user=user;
+        req.user=user;  //we are adding a new field in req => we can access user from req.user
         next();
     })(req,res,next)
 

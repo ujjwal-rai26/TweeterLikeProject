@@ -14,9 +14,9 @@ const router=express.Router();
 
 router.post('/tweets',authenticate,createTweet);  //  because of (authenticate) {only autherized user can tweet}
 
-router.post('/likes/toggle',toggleLike);
+router.post('/likes/toggle',authenticate,toggleLike); //  because of (authenticate) {only autherized user can tweet}
 
-router.post('/comments',createComment);
+router.post('/comments',authenticate,createComment); //  because of (authenticate) {only autherized user can tweet}
 
 router.post('/signup',signup);
 
