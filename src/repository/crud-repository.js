@@ -1,20 +1,40 @@
 
 class CrudRepository{
-     constructor(model){
-        this.model=model;
-     }
+    //  constructor(model){
+    //     this.model=model;
+    //  }
 
-    async create(data){
+    // async create(data){
+    //     try {
+
+    //         console.log("inside crud repo",data)      
+    //          const result =await this.model.create(data);
+    //          console.log(result);
+    //        return result;
+    //     } 
+    //     catch (error) {
+    //         console.log('error in  crud repo');
+    //         throw error;
+    //     }
+    // }
+
+    constructor(model) {
+        this.model = model;
+      }
+    
+      async create(data) {
         try {
-           const result=await  this.model.create(data);
-           console.log(result);
-           return result;
-        } 
-        catch (error) {
-            console.log('error in  crud repo');
-            throw error;
+          console.log("inside crud repo", data);
+          const response = await this.model.create(data);    
+          return response;
+        } catch (error) {
+          console.log('error in crud repo');
+          throw error;
         }
-    }
+      }
+
+
+
     async get(id){
         try {
            const result=await  this.model.findById(id);
